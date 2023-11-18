@@ -49,7 +49,8 @@ app.get("/screenshot", async (req, res) => {
     res.setHeader("content-Type", "image/jpeg");
     res.send(screenshot);
   } catch (error) {
-    res.status(500).send("Error generating screenshot");
+    console.log(error);
+    res.status(500).send({ message: "Error generating screenshot", error });
   }
 });
 
