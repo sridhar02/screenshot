@@ -35,6 +35,10 @@ const takeScreenshot = async (url) => {
   return screenshot;
 };
 
+app.get("/status", (req, res) => {
+  res.status(200).send({ Message: `website is working on ${port}` });
+});
+
 app.get("/screenshot", async (req, res) => {
   const { url } = req.query;
   if (!url) {
