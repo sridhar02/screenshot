@@ -19,4 +19,5 @@ aptPkgs = [
     'libxss1',
     'libxtst6',
     'xdg-utils',
+    "libglib2.0-dev",
 ]
