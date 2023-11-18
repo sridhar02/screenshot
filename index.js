@@ -24,7 +24,7 @@ const takeScreenshot = async (url) => {
   await page.setViewport({
     width: 2880,
     height: 1800,
-    deviceScaleFactor: 2,
+    deviceScaleFactor: 1,
   });
 
   await page.goto(url, {
