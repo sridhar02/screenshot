@@ -14,7 +14,10 @@ app.use(express.json());
 // );
 
 const takeScreenshot = async (url) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    headless: false,
+    args: ["--no-sandbox"],
+  });
   const page = await browser.newPage();
 
   await page.setViewport({
