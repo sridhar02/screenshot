@@ -15,6 +15,7 @@ app.use(express.json());
 
 const takeScreenshot = async (url) => {
   const browser = await puppeteer.launch({
+    headless: "new",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
     ignoreDefaultArgs: ["--disable-extensions"],
   });
