@@ -54,7 +54,7 @@ app.get("/screenshot", async (req, res) => {
   try {
     const screenshot = await takeScreenshot(url);
     res.setHeader("content-Type", "image/jpeg");
-    res.send({ screenshot });
+    res.send(screenshot);
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Error generating screenshot", error });
