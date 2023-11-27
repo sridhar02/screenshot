@@ -1,11 +1,14 @@
-const express = require("express");
-const puppeteer = require("puppeteer");
-const AdblockerPlugin = require("puppeteer-extra-plugin-adblocker");
+import express from "express";
+import puppeteer from "puppeteer";
+import morgan from "morgan";
+
+// const AdblockerPlugin = require("puppeteer-extra-plugin-adblocker");
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 
 app.use(express.json());
+app.use(morgan("combined"));
 
 // puppeteer.Mouse(
 //   AdblockerPlugin({
@@ -51,7 +54,7 @@ app.get("/screenshot", async (req, res) => {
   try {
     const screenshot = await takeScreenshot(url);
     res.setHeader("content-Type", "image/jpeg");
-    res.send(screenshot);
+    res.send({ imageUrl: screenshot });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Error generating screenshot", error });
