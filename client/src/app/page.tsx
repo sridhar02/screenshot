@@ -19,11 +19,20 @@ export default async function Home() {
   );
 }
 
+interface screenshots {
+  imageUrl: string;
+  id: string;
+  userProvidedUrl: string;
+  userId: string;
+  createdAt: Date;
+}
+
 async function CrudShowcase() {
   const session = await getServerAuthSession();
   if (!session?.user) return null;
 
-  const allScreenshots = await api.screenshot.getAll.query();
+  const allScreenshots: screenshots = await api.screenshot.getAll.query();
+  console.log(allScreenshots);
   return (
     <div className="">
       <CreatePost allScreenshots={allScreenshots} />
