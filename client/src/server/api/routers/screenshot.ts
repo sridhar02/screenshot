@@ -5,8 +5,7 @@ import { env } from "~/env";
 
 import {
   createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
+  protectedProcedure
 } from "~/server/api/trpc";
 
 export const screenRouter = createTRPCRouter({
@@ -31,7 +30,7 @@ export const screenRouter = createTRPCRouter({
         },
       });
 
-      const resp2JSON = await resp2.json();
+      const resp2JSON = await resp2.json() as { url: string };
 
       return ctx.db.screenshot.create({
         data: {

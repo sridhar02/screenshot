@@ -1,26 +1,31 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
-import { api } from "~/trpc/server";
+import { api } from "~/trpc/react";
 
-export const Screenshot = () => {
+export function Screenshot() {
   const [url, setUrl] = useState("");
+  const utils = api.useUtils();
+
+  const allScreenshots = api.screenshot.getAll.useQuery();
 
   const takeScreenshot = api.screenshot.create.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       setUrl("");
+      await utils.screenshot.getAll.invalidate();
     },
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    takeScreenshot.mutate({ url });
-  };
+  if (!allScreenshots.data) return null;
 
   return (
-    <div>
+    <>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          takeScreenshot.mutate({ url });
+        }}
         className="flex w-full flex-col justify-center"
       >
         <label htmlFor="url">
@@ -34,9 +39,20 @@ export const Screenshot = () => {
           />
         </label>
         <button type="submit" className="w-40 rounded-md bg-blue-200 p-2">
-          Send
+          {takeScreenshot.isLoading ? "Submitting..." : "Submit"}
         </button>
       </form>
-    </div>
+
+      <div className="">
+        <div className="flex ">
+          {allScreenshots.data.map((item, index) => (
+            <div key={index} className="m-2 border-2 border-red-200 p-2">
+              <h1>screenshot {index + 1}</h1>
+              <img src={item.imageUrl} alt="asdas" className="" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
-};
+}

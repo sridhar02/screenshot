@@ -2,8 +2,9 @@
 
 import React from "react";
 import Link from "next/link";
+import type { Session } from "next-auth";
 
-export const Navbar = ({ session }: any) => {
+export const Navbar = ({ session }: { session: Session | null }) => {
   return (
     <div className="flex items-center justify-around bg-blue-400">
       <h1>Screenshot Pro</h1>
