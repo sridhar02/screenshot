@@ -23,10 +23,7 @@ async function CrudShowcase() {
   const session = await getServerAuthSession();
   if (!session?.user) return null;
 
-  const { data: allScreenshots } = await api.screenshot.getAll.useQuery({});
-
-  console.log(allScreenshots);
-
+  const allScreenshots = await api.screenshot.getAll.query();
   return (
     <div className="">
       <CreatePost allScreenshots={allScreenshots} />

@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { uuid } from "uuidv4";
 
+import { env } from "~/env";
+
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -20,15 +22,13 @@ export const screenRouter = createTRPCRouter({
     .input(z.object({ url: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const id = ctx.session.user.id;
-      const screenshoturl = "https://skscreenshot.up.railway.app/screenshot";
-      const imageUpload = "https://screenshot-worker.sridhar02.workers.dev";
+      const screenshoturl = env.API_URL;
+      const imageUpload = env.UPLOAD_URL;
 
       const resp = await fetch(`${screenshoturl}?url=${input.url}`);
+
       const imageBlob = await resp.blob();
-
       const imageId = uuid();
-
-      console.log({ imageBlob, imageId }, "sridhar");
 
       const resp2 = await fetch(`${imageUpload}/${imageId}`, {
         method: "PUT",
@@ -40,7 +40,6 @@ export const screenRouter = createTRPCRouter({
       });
 
       const resp2JSON = await resp2.json();
-      console.log({ resp2JSON });
 
       return ctx.db.screenshot.create({
         data: {
