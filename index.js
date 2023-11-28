@@ -24,11 +24,11 @@ const takeScreenshot = async (url) => {
   });
   const page = await browser.newPage();
 
-  // await page.setViewport({
-  //   // width: 2880,
-  //   // height: 1800,
-  //   deviceScaleFactor: 1,
-  // });
+  await page.setViewport({
+    width: 1024,
+    height: 1080,
+    deviceScaleFactor: 1,
+  });
 
   await page.goto(url, {
     waitUntil: "networkidle0",
