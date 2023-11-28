@@ -10,14 +10,6 @@ import {
 } from "~/server/api/trpc";
 
 export const screenRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
   create: protectedProcedure
     .input(z.object({ url: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -55,9 +47,5 @@ export const screenRouter = createTRPCRouter({
       orderBy: { createdAt: "desc" },
       where: { userId: ctx.session.user.id },
     });
-  }),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
   }),
 });
