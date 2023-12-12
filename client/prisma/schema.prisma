@@ -64,6 +64,14 @@ model Screenshot {
     User            User     @relation(fields: [userId], references: [id])
     userId          String
     createdAt       DateTime @default(now())
+    status          Status   @default(PENDING)
+}
+
+enum Status {
+    PENDING
+    SUCCESS
+    ERROR
+    TIMEOUT
 }
 
 // success, error,timeout

@@ -25,16 +25,16 @@ const takeScreenshot = async (url) => {
   const page = await browser.newPage();
 
   await page.setViewport({
-    width: 1024,
+    width: 1920,
     height: 1080,
     deviceScaleFactor: 1,
   });
 
   await page.goto(url, {
-    waitUntil: "networkidle0",
+    waitUntil: "networkidle2",
   });
   const screenshot = await page.screenshot({
-    fullPage: true,
+    // fullPage: true,
     type: "jpeg",
     quality: 100,
   });

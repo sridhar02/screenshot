@@ -1,1 +1,0 @@
-# Testing puppeteer for screenshots
