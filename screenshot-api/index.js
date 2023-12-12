@@ -19,6 +19,7 @@ app.use(morgan("combined"));
 const takeScreenshot = async (url) => {
   const browser = await puppeteer.launch({
     headless: "new",
+    executablePath: "/usr/bin/chromium-browser",
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
     ignoreDefaultArgs: ["--disable-extensions"],
   });
