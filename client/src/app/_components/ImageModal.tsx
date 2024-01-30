@@ -6,7 +6,7 @@ interface OwnProps {
 }
 
 const ImageModal = ({ imageUrl, onClose }: OwnProps) => {
-  const modalRef = useRef();
+  const modalRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const closeModal = () => {
     onClose();
