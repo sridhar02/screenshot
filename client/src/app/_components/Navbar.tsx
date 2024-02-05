@@ -7,7 +7,6 @@ import type { Session } from "next-auth";
 export const Navbar = ({ session }: { session: Session | null }) => {
   return (
     <div className="flex items-center justify-around bg-blue-400">
-      <h1>Screenshot Pro</h1>
       <p className="text-center text-2xl text-white">
         {session && <span>Logged in as {session.user?.name}</span>}
       </p>
