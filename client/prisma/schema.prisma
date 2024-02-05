@@ -65,6 +65,7 @@ model Screenshot {
     userId          String
     createdAt       DateTime @default(now())
     status          Status   @default(PENDING)
+    statusMessage   String?
 }
 
 enum Status {

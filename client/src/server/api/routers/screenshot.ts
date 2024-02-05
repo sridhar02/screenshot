@@ -16,7 +16,20 @@ export const screenRouter = createTRPCRouter({
       const screenshoturl = env.API_URL;
       const imageUpload = env.UPLOAD_URL;
 
-      const resp = await fetch(`${screenshoturl}?url=${input.url}`);
+      const resp = await fetch(`${screenshoturl}?url=https://${input.url}`);
+
+      if (!resp.ok) {
+        return  ctx.db.screenshot.create({
+          data: {
+            imageUrl: "",
+            userProvidedUrl: input.url,
+            userId: id,
+            status: "ERROR",
+            statusMessage: `${resp.status}|| ${resp.statusText}`
+          },
+        });
+        return ""
+    }
 
       const imageBlob = await resp.blob();
       const imageId = uuid();
@@ -37,6 +50,7 @@ export const screenRouter = createTRPCRouter({
           imageUrl: resp2JSON.url,
           userProvidedUrl: input.url,
           userId: id,
+          status: "SUCCESS",
         },
       });
     }),

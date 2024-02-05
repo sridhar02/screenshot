@@ -1,0 +1,14 @@
+
+DATABASE_URL="postgresql://sridhar02:zdkXrNwMA0F2@ep-yellow-scene-957805.ap-southeast-1.aws.neon.tech/screenshot-local?sslmode=require"
+NEXTAUTH_SECRET="mG+JiZHU2Np64vylBp6jBIcEK+R24Cbl4+lVeqGPWZk="
+NEXTAUTH_URL="http://localhost:3000"
+
+API_URL="https://skscreenshot.up.railway.app/screenshot"
+UPLOAD_URL="https://screenshot-worker.sridhar02.workers.dev"
+
+GITHUB_CLIENT_ID-prod="e98140996f1383b0d33d"
+GITHUB_CLIENT_SECRET-prod="64d3effbe2c4a50e60544f3529dff0d7921a308b"
+
+GITHUB_CLIENT_ID="9fd22201faa23e60e392"
+GITHUB_CLIENT_SECRET="afd916dd4901ed08f7f21e8ff6528aea57fe7a3b"
+
