@@ -2,8 +2,12 @@
 
 import React, { useState } from "react";
 import { api } from "~/trpc/react";
-import queryString from "query-string";
+// import queryString from "query-string";
 import { Copy, MoveDown, MoveUp, Scan } from "lucide-react";
+
+type Response = {
+  imageUrl: string;
+};
 
 export default function Page() {
   const baseUrl = "https://api.screenshot.com/screenshot";
@@ -39,7 +43,7 @@ export default function Page() {
     timeOut: 60,
   });
 
-  const [response, setResponse] = useState();
+  const [response, setResponse] = useState<Response | null>(null);
   const utils = api.useUtils();
 
   const takeScreenshot = api.screenshot.create.useMutation({
@@ -58,7 +62,7 @@ export default function Page() {
     takeScreenshot.mutate({ url: params.url });
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
 
     // Update the params state based on the input type
