@@ -2,12 +2,21 @@
 
 import { useState } from "react";
 import { api } from "~/trpc/react";
+
 import ImageModal from "./ImageModal";
 
-export function Screenshot({ gallery }: any) {
+type screenshot = {
+  userProvidedUrl: string;
+  status: string;
+  imageUrl: string;
+  createdAt: Date;
+};
+
+export function Screenshot() {
   const utils = api.useUtils();
-  const [modalVisible, setModalVisible] = useState(false);
+
   const [imageUrl, setImageUrl] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = (url: string) => {
     setModalVisible(true);
@@ -62,7 +71,7 @@ export function Screenshot({ gallery }: any) {
             </tr>
           </thead>
           <tbody>
-            {allScreenshots.data.map((item, index) => (
+            {allScreenshots.data.map((item: screenshot, index: number) => (
               <tr key={index} className="p-4">
                 <td>{index + 1}</td>
                 <td className="px-4">

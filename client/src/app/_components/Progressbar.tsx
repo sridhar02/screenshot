@@ -1,6 +1,11 @@
 "use client";
 
-export const ProgressBar = ({ progress, max }: any) => {
+type ownProps = {
+  progress?: number;
+  max: number;
+};
+
+export const ProgressBar = ({ progress = 0, max }: ownProps) => {
   // Ensure progress is between 0 and 100
   //   const validProgress = Math.min(Math.max(progress, 0), max);
   const validMax = Math.max(max, 1); // Avoid division by zero
