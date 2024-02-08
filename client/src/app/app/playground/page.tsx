@@ -9,6 +9,17 @@ type Response = {
   imageUrl: string;
 };
 
+type selectionProps = {
+  essentials?: boolean;
+  fullPage?: boolean;
+  viewport?: boolean;
+  imageOptions?: boolean;
+  blocking?: boolean;
+  requestOptions?: boolean;
+  caching?: boolean;
+  waitDelayOptions?: boolean;
+};
+
 export default function Page() {
   const baseUrl = "https://api.screenshot.com/screenshot";
 
@@ -47,13 +58,13 @@ export default function Page() {
   const utils = api.useUtils();
 
   const takeScreenshot = api.screenshot.create.useMutation({
-    onSuccess: async (data: any) => {
+    onSuccess: async (data: Response) => {
       setResponse(data);
       // await utils.screenshot.getAll.invalidate();
     },
   });
 
-  const handleSelect = (value: any) => {
+  const handleSelect = (value: selectionProps) => {
     const updatedState = { ...selectSections, ...value };
     setSelectSections(updatedState);
   };
