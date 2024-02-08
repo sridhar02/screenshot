@@ -26,7 +26,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
         <TRPCReactProvider cookies={cookies().toString()}>
-          <ScreenLayout>{children}</ScreenLayout>
+          {children}
         </TRPCReactProvider>
       </body>
     </html>
