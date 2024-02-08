@@ -1,4 +1,4 @@
-import { Screenshot } from "../_components/screenshot";
+import { Screenshot } from "~/app/_components/screenshot";
 
 export default function Page() {
   return (
