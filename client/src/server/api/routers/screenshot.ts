@@ -3,10 +3,7 @@ import { uuid } from "uuidv4";
 
 import { env } from "~/env";
 
-import {
-  createTRPCRouter,
-  protectedProcedure
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 export const screenRouter = createTRPCRouter({
   create: protectedProcedure
@@ -16,20 +13,29 @@ export const screenRouter = createTRPCRouter({
       const screenshoturl = env.API_URL;
       const imageUpload = env.UPLOAD_URL;
 
-      const resp = await fetch(`${screenshoturl}?url=https://${input.url}`);
+      const limit = await ctx.db.screenshot.count({
+        where: { userId: id },
+      });
+
+      console.log({ limit });
+
+      // if (limit > 100) {
+      //   return "You can't create more links, upgrade your plan";
+      // }
+
+      const resp = await fetch(`${screenshoturl}?url=${input.url}`);
 
       if (!resp.ok) {
-        return  ctx.db.screenshot.create({
+        return ctx.db.screenshot.create({
           data: {
             imageUrl: "",
             userProvidedUrl: input.url,
             userId: id,
             status: "ERROR",
-            statusMessage: `${resp.status}|| ${resp.statusText}`
+            statusMessage: `${resp.status}|| ${resp.statusText}`,
           },
         });
-        return ""
-    }
+      }
 
       const imageBlob = await resp.blob();
       const imageId = uuid();
@@ -43,7 +49,7 @@ export const screenRouter = createTRPCRouter({
         },
       });
 
-      const resp2JSON = await resp2.json() as { url: string };
+      const resp2JSON = (await resp2.json()) as { url: string };
 
       return ctx.db.screenshot.create({
         data: {
