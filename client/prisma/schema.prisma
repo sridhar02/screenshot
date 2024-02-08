@@ -46,15 +46,18 @@ model Session {
 }
 
 model User {
-    id            String       @id @default(cuid())
-    name          String?
-    email         String?      @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    posts         Post[]
-    screenshots   Screenshot[]
+    id             String           @id @default(cuid())
+    name           String?
+    email          String?          @unique
+    emailVerified  DateTime?
+    image          String?
+    accounts       Account[]
+    sessions       Session[]
+    posts          Post[]
+    plan           Plans            @default(FREE)
+    screenshots    Screenshot[]
+    userMetrics    userMetrics[]
+    userAccessKeys userAccessKeys[]
 }
 
 model Screenshot {
@@ -68,11 +71,45 @@ model Screenshot {
     statusMessage   String?
 }
 
+model userMetrics {
+    id              String   @id @default(cuid())
+    userId          String
+    screenshotLimit Int      @default(100)
+    screenshotTaken Int      @default(0)
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime @updatedAt
+    month           Int
+    year            Int
+    User            User     @relation(fields: [userId], references: [id])
+
+    @@unique([userId, month, year])
+}
+
+model userAccessKeys {
+    id        String    @id @default(cuid())
+    key       String
+    keyStatus keyStatus @default(ACTIVE)
+    userId    String
+    User      User      @relation(fields: [userId], references: [id])
+}
+
+enum keyStatus {
+    ACTIVE
+    DEACTIVATED
+}
+
 enum Status {
     PENDING
     SUCCESS
     ERROR
     TIMEOUT
+}
+
+enum Plans {
+    FREE
+    PRO
+
+    @@map("PLANS")
 }
 
 // success, error,timeout
