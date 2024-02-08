@@ -14,21 +14,21 @@ export const ScreenLayout = async ({
       <div className="flex h-screen w-[20%] flex-col gap-4 border-r-2 bg-gray-200 p-4">
         <h1 className="text-2xl">Screenshot Pro</h1>
         <div className="p-2">
-          <Link href="dashboard"> Dashboard</Link>
+          <Link href="/app"> Dashboard</Link>
         </div>
         <div className="p-2">
-          <Link href="gallery"> Gallery</Link>
+          <Link href="/app/apikeys">API Keys</Link>
+        </div>
+        {/* <div className="p-2">
+          <Link href="/app/gallery"> Gallery</Link>
+        </div> */}
+        <div className="p-2">
+          <Link href="/app/playground"> Playground</Link>
         </div>
         <div className="p-2">
-          <Link href="playground"> Playground</Link>
+          <Link href="/app/history"> History</Link>
         </div>
-        <div className="p-2">
-          <Link href="history"> History</Link>
-        </div>
-        <div className="p-2">
-          <Link href="subscription"> Subscription</Link>
-        </div>
-        <div className="p-2">
+        {/* <div className="p-2">
           <Link href="payments"> Payments</Link>
         </div>
         <div className="p-2">
@@ -36,7 +36,7 @@ export const ScreenLayout = async ({
         </div>
         <div className="p-2">
           <Link href="organization"> Organizations</Link>
-        </div>
+        </div> */}
       </div>
       <div className="flex w-full flex-col">
         <Navbar session={session} />
