@@ -8,7 +8,7 @@ export const Navbar = ({ session }: { session: Session | null }) => {
   return (
     <div className="flex items-center justify-around bg-blue-400">
       <p className="text-center text-lg text-white">
-        {session && <span>Logged in as {session.user?.email}</span>}
+        {session && <span>Logged in as {session.user?.name}</span>}
       </p>
       <Link
         href={session ? "/api/auth/signout" : "/api/auth/signin"}
