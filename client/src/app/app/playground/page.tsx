@@ -310,7 +310,11 @@ export default function Page() {
           <div className=" w-full rounded-lg shadow-lg">
             <div className="h-96 w-full overflow-scroll rounded-b-lg bg-gray-100">
               {response ? (
-                <img src={response.imageUrl} alt="screenshot_url" />
+                <img
+                  src={response.imageUrl}
+                  alt="screenshot_url"
+                  className="h-full w-full"
+                />
               ) : (
                 <div className="flex h-full items-center justify-center p-2">
                   {!takeScreenshot.isLoading
