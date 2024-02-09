@@ -1,13 +1,18 @@
 "use client";
 
 import { api } from "~/trpc/react";
+
+import { Screenshot,  } from "~/lib/types";
 import { ProgressBar } from "../_components/Progressbar";
+
 
 export default function Page() {
   const max = 300;
 
   const allscreenshots = api.screenshot.getAll.useQuery();
-  const count = 10;
+  const { data: screenshots =[] } = allscreenshots;
+  
+  const count = screenshots.length;
 
   return (
     <div className="p-4 px-8">

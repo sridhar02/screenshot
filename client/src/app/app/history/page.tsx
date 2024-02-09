@@ -1,12 +1,7 @@
 "use client";
 
-import React from "react";
-import {
-  formatDistanceToNowStrict,
-  formatISO,
-  formatRFC7231,
-  parseISO,
-} from "date-fns";
+import React, { useState, useMemo } from "react";
+import { formatRFC7231 } from "date-fns";
 import {
   Table as ReactTable,
   useReactTable,
@@ -22,33 +17,14 @@ import { ArrowUpDown, ArrowDownUp } from "lucide-react";
 
 import { api } from "~/trpc/react";
 import { HistoryFilter } from "~/app/_components/HistoryFilter";
-
-type Screenshot = {
-  id: string;
-  statusMessage: string;
-  userId: string;
-  userProvidedUrl: string;
-  status: string;
-  imageUrl: string;
-  createdAt: Date;
-};
-
-type ScreenshotData = {
-  number: number;
-  status: string;
-  type: string;
-  host: string;
-  options: string;
-  timeSec: string;
-  size: string;
-  timeStamp: string;
-};
+import { Screenshot, ScreenshotData } from "~/lib/types";
 
 export default function Page() {
   const allScreenshots = api && api.screenshot.getAll.useQuery();
+  const [statusFilter, setStatusFilter] = useState("");
   const { data: screenshots } = allScreenshots;
 
-  const columns = React.useMemo<ColumnDef<ScreenshotData>[]>(
+  const columns = useMemo<ColumnDef<ScreenshotData>[]>(
     () => [
       {
         accessorKey: "number",
@@ -125,7 +101,7 @@ export default function Page() {
 }
 
 function Table({ data, columns }: { data: any; columns: any }) {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
     data,
@@ -142,7 +118,7 @@ function Table({ data, columns }: { data: any; columns: any }) {
   });
 
   return (
-    <div className="w-full p-2">
+    <div className="w-full">
       <HistoryFilter table={table} />
       <table className="w-full border-2">
         <thead>
@@ -217,7 +193,7 @@ function Table({ data, columns }: { data: any; columns: any }) {
         <span className="flex items-center gap-1">
           <div>Page</div>
           <strong>
-            {table.getState().pagination.pageIndex + 1} of
+            {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </strong>
         </span>
