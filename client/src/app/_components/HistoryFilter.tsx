@@ -48,6 +48,12 @@ export const HistoryFilter = (props: OwnProps) => {
                 <HelpCircle color="blue" /> Pending
               </div>
             </SelectItem>
+            <SelectItem value=" ">
+              <div className="inline-flex items-center justify-center gap-2">
+                <CheckCircle2 color="green" />
+                Reset Filter
+              </div>{" "}
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
