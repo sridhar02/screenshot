@@ -12,6 +12,7 @@ import {
   flexRender,
   SortingState,
   getSortedRowModel,
+  Column,
 } from "@tanstack/react-table";
 import { ArrowUpDown, ArrowDownUp } from "lucide-react";
 
@@ -71,6 +72,22 @@ export default function Page() {
     [],
   );
 
+  const memorizedScreenshots = useMemo(() => {
+    if (!screenshots) return [];
+
+    return screenshots.filter((item) => {
+      if (statusFilter === "SUCCESS") {
+        return item.status === "SUCCESS";
+      } else if (statusFilter === "ERROR") {
+        return item.status === "ERROR";
+      } else if (statusFilter === "PENDING") {
+        return item.status === "PENDING";
+      } else {
+        return true;
+      }
+    });
+  }, [screenshots, statusFilter]);
+
   const transformData = (data: Screenshot[] = []) => {
     return data.map((item, index) => {
       return {
@@ -86,21 +103,29 @@ export default function Page() {
     });
   };
 
-  const data = transformData(screenshots as Screenshot[]);
+  const data = transformData(memorizedScreenshots as Screenshot[]);
 
   return (
     <div className="w-full p-4 px-8">
       <h1 className="mb-4 text-xl font-semibold">History</h1>
       <div className="flex w-full flex-col">
         <div className="flex-1 py-4">
-          <Table {...{ data, columns }} />
+          <Table {...{ data, columns }} setStatusFilter={setStatusFilter} />
         </div>
       </div>
     </div>
   );
 }
 
-function Table({ data, columns }: { data: any; columns: any }) {
+function Table({
+  data,
+  columns,
+  setStatusFilter,
+}: {
+  data: ScreenshotData[];
+  columns: ColumnDef<ScreenshotData>[];
+  setStatusFilter: (statusFilter: string) => void;
+}) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
@@ -119,7 +144,7 @@ function Table({ data, columns }: { data: any; columns: any }) {
 
   return (
     <div className="w-full">
-      <HistoryFilter table={table} />
+      <HistoryFilter table={table} setStatusFilter={setStatusFilter} />
       <table className="w-full border-2">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
