@@ -9,38 +9,41 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { ScreenshotData } from "~/lib/types";
 
 type OwnProps = {
-  table: ReactTable<unknown>;
+  table: ReactTable<ScreenshotData>;
+  setStatusFilter: (statusFilter: string) => void;
 };
 
 export const HistoryFilter = (props: OwnProps) => {
-  const { table } = props;
+  const { table, setStatusFilter } = props;
 
   return (
     <div className="mb-2 flex items-center justify-between gap-8 py-4">
       <div>
         <Select
-          onValueChange={(e) => {
-            console.log(e);
+          onValueChange={(value) => {
+            console.log(value);
+            setStatusFilter(value);
           }}
         >
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Status:All" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="success">
+            <SelectItem value="SUCCESS">
               <div className="inline-flex items-center justify-center gap-2">
                 <CheckCircle2 color="green" />
                 Success
               </div>{" "}
             </SelectItem>
-            <SelectItem value="error">
+            <SelectItem value="ERROR">
               <div className="inline-flex items-center justify-center gap-2">
                 <XCircle color="red" /> Error
               </div>
             </SelectItem>
-            <SelectItem value="pending">
+            <SelectItem value="PENDING">
               <div className="inline-flex items-center justify-center gap-2">
                 <HelpCircle color="blue" /> Pending
               </div>
