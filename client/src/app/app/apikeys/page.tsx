@@ -3,12 +3,22 @@
 import { Clipboard, EyeOff, Eye, ClipboardCheck } from "lucide-react";
 import { useState } from "react";
 
+import { api } from "~/trpc/react";
+
+type keyTypeResponse = {
+  data: {
+    key: string;
+  };
+};
+
 export default function Page() {
   const [show, setShow] = useState(false);
   const [type, setType] = useState("password");
   const [isCopied, setIsCopied] = useState(false);
 
-  const value = "asdadasdafasfsd";
+  const keyResponse = api.apiKeys.getAPIKey.useQuery();
+
+  const { data = { key: "" } } = keyResponse;
 
   const handleClick = () => {
     if (type === "password") {
@@ -21,7 +31,7 @@ export default function Page() {
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(value);
+      await navigator.clipboard.writeText(data.key);
       setIsCopied(true);
       setTimeout(() => {
         setIsCopied(false);
@@ -40,16 +50,21 @@ export default function Page() {
           Use your access key to access API
         </p>
         <div className="flex items-center gap-8">
-          <input type={type} className="border-2 p-2" value={value} readOnly />
+          <input
+            type={type}
+            className="flex-auto border-2 p-2"
+            value={data.key}
+            readOnly
+          />
           <div className="cursor-pointer" onClick={handleClick}>
             {!show ? <Eye /> : <EyeOff />}
           </div>
           <div className="cursor-pointer" onClick={handleCopy}>
             {!isCopied ? <Clipboard /> : <ClipboardCheck />}
           </div>
-          <button className="rounded-md bg-red-500 p-2 px-4 text-white">
+          {/* <button className="rounded-md bg-red-500 p-2 px-4 text-white">
             Regenerate
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

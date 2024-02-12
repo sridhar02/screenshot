@@ -1,3 +1,6 @@
+
+export const maxScreenshotSize = 300;
+
 export const top100 = [
   "youtube.com",
   "en.wikipedia.org",

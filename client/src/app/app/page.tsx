@@ -2,17 +2,11 @@
 
 import { api } from "~/trpc/react";
 
-import { Screenshot,  } from "~/lib/types";
 import { ProgressBar } from "../_components/Progressbar";
 
-
 export default function Page() {
-  const max = 300;
-
-  const allscreenshots = api.screenshot.getAll.useQuery();
-  const { data: screenshots =[] } = allscreenshots;
-  
-  const count = screenshots.length;
+  const userMetrics = api.userMetrics.getCurrentMetrics.useQuery();
+  const { data: metrics } = userMetrics;
 
   return (
     <div className="p-4 px-8">
@@ -22,11 +16,14 @@ export default function Page() {
           <div className="mb-4 flex justify-between">
             <p>Usage will reset on Mar 02, 2024</p>
             <div>
-              {count}/{max}
+              {metrics?.screenshotTaken}/{metrics?.screenshotLimit}
             </div>
           </div>
 
-          <ProgressBar progress={count} max={max} />
+          <ProgressBar
+            progress={metrics?.screenshotTaken}
+            max={metrics?.screenshotLimit}
+          />
         </div>
       </div>
     </div>
